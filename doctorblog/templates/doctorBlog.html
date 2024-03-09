@@ -1,0 +1,38 @@
+{% extends "userTemplates.html" %}
+{% comment %} {% load filter %} {% endcomment %}
+
+{% block title %} Doctor Blog {% endblock title %} 
+
+{% block body %}
+
+<div class="" style="padding-top: 25px;">
+    <div class="row" style="margin-bottom: 25px;">
+        <div class="col-12 text-center">
+            <a href="/add">Add</a>
+
+        </div>
+        {% if data %}
+            {% for i in data %}
+            <div class="col-6">
+                <img src="/static/image/upload/{{i.blog_image}}" style="width: 30%;">
+                <a href="/edit/{{i.id}}">Edit</a>
+                <a href="/delete/{{i.id}}">Delete</a>
+                <h1>{{i.title}}</h1>
+                {% comment %} {% truncate_summary i.summary as summary%} {% endcomment %}
+                <p>{{ summary }}</p> 
+
+                {% comment %} <p>{{ i.summary }}</p> {% endcomment %}
+                {% comment %} {% if i.summary|word_count > 15 %}
+                    <p>{{ i.summary|slice_words:15 }}...</p>
+                {% else %}
+                    <p>{{i.summary}}</p>
+                {% endif %} {% endcomment %}
+                <p>{{i.content}}</p>
+            </div>
+            {% endfor %}
+        {% endif %}
+        </div>
+  </div>
+
+
+{% endblock body %}

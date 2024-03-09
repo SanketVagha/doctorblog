@@ -1,0 +1,52 @@
+{% extends "userTemplates.html" %}
+
+{% block title %} Doctor Blog {% endblock title %} 
+
+{% block body %}
+
+<div class="container">
+    <form action="/add" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+        <input type="hidden" name="id" id="id" value="{{id}}">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title" value="{{edit.title}}" required>
+        </div>
+        <div class="form-group">
+            <label for="summary">Summary</label>
+            <textarea name="summary" id="summary" cols="30" rows="5" required>
+                {{edit.summary}}
+            </textarea>
+        </div>
+        <div class="form-group">
+            <label for="content">Content</label>
+            <textarea name="content" id="content" cols="30" rows="5" required>
+                {{edit.content}}
+            </textarea>
+        </div>
+        <div class="form-group">
+            <label for="category">Category</label>
+            <select name="categoryId" id="categoryId">
+                {% comment %} <input type="text"  value="{{edit.categoryId_id}}"> {% endcomment %}
+                
+                {% for data in categories %}
+                    <option value="{{data.id}}"   {% if data.id == edit.categoryId_id %} selected{% endif %}>{{data.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="blog_image">Blog Image</label>
+            <input type="file" name="blog_image" id="blog_image" accept="image/png, image/jpeg, image/jpg" required>
+            <img src="/static/image/upload/{{edit.blog_image}}" alt="">
+        </div>
+        <div class="form-group">
+            <input type="submit" name="submit" id="submit">
+        </div>
+    
+
+    </form>
+</div>
+
+
+{% endblock body %}
